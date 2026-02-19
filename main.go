@@ -28,30 +28,53 @@ func main() {
 	fmt.Println("maze height/width:", m.Height, m.Width)
 }
 
+// Set IDs for each type
 const (
-	DFS = iota
-	BFS
-	GBFS
-	ASTAR
-	DIJKSTRA
+	DFS      = iota //Depth First Search
+	BFS             //Breath First Search
+	GBFS            //Greedy Best First Search
+	ASTAR           //A* Search
+	DIJKSTRA        //Dijkstra's algorithm
 )
 
+// Point struct is for xy coordinates
 type Point struct {
 	Row int
 	Col int
 }
 
+// Wall is potential node to be area that cannot be explored
 type Wall struct {
 	State Point
 	wall  bool
 }
 
+type Node struct {
+	index  int
+	State  Point
+	Parent *Node
+	Action string
+}
+
+type Solution struct {
+	Action []string
+	Cells  []Point
+}
+
+// Maze is our game . It keeps every information for the game
 type Maze struct {
-	Height int
-	Width  int
-	Start  Point
-	Goal   Point
-	WallS  [][]Wall
+	Height      int      // How tall the maze
+	Width       int      // How wide the maze
+	Start       Point    // Starting point to the maze
+	Goal        Point    // Ending point to the maze
+	WallS       [][]Wall // Walls that cannot be explored
+	CurrentNode *Node
+	Solution    Solution
+	Explored    []Point
+	Steps       int
+	NumExplored int
+	Debug       bool
+	SearchType  int
 }
 
 func (g *Maze) Load(fileName string) error {
