@@ -40,9 +40,10 @@ func main() {
 	if len(m.Solution.Action) > 0 {
 		fmt.Println("Solution:")
 		// TODO print Maze
-		m.PrintMaze()
+		//m.PrintMaze()
 		fmt.Println("Solution is", len(m.Solution.Cells), "steps")
 		fmt.Println("Time to solve:", time.Since(startTime))
+		m.OutputImage("image.png")
 	} else {
 		fmt.Println("No solution")
 	}
