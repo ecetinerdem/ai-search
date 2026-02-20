@@ -6,10 +6,19 @@ import (
 	"flag"
 	"fmt"
 	"io"
+	"log"
 	"os"
 	"strings"
 	"time"
 )
+
+func init() {
+	err := os.Mkdir("./tmp", os.ModePerm)
+	if err != nil {
+		log.Println(err)
+	}
+	emptyTmp()
+}
 
 func main() {
 	var m Maze
@@ -18,6 +27,8 @@ func main() {
 
 	flag.StringVar(&maze, "file", "maze.txt", "maze file")
 	flag.StringVar(&searchType, "search", "dfs", "search type")
+	flag.BoolVar(&m.Debug, "debug", false, "write debugging info")
+	flag.BoolVar(&m.Animate, "animate", false, "produce animation")
 	flag.Parse()
 
 	err := m.Load(maze)
@@ -49,6 +60,12 @@ func main() {
 	}
 
 	fmt.Println("Explored", len(m.Explored), "nodes")
+
+	if m.Animate {
+		fmt.Println("Building animation...")
+		m.OutputAnimatedImage()
+		fmt.Println("Done!")
+	}
 }
 
 func solveDFS(m *Maze) {
@@ -135,6 +152,7 @@ type Maze struct {
 	NumExplored int
 	Debug       bool
 	SearchType  int
+	Animate     bool
 }
 
 func (g *Maze) Load(fileName string) error {
