@@ -46,6 +46,9 @@ func main() {
 	case "bfs":
 		m.SearchType = BFS
 		solveBFS(&m)
+	case "dijkstra":
+		m.SearchType = DIJKSTRA
+		solveDijkstra(&m)
 	default:
 		fmt.Println("Invalid search type")
 		os.Exit(1)
@@ -82,6 +85,15 @@ func solveDFS(m *Maze) {
 
 func solveBFS(m *Maze) {
 	var s BreadthFirstSearch
+
+	s.Game = m
+
+	fmt.Println("Goal is", s.Game.Goal)
+	s.Solve()
+}
+
+func solveDijkstra(m *Maze) {
+	var s DijkstraSearch
 
 	s.Game = m
 
@@ -139,10 +151,15 @@ type Wall struct {
 }
 
 type Node struct {
-	index  int
-	State  Point
-	Parent *Node
-	Action string
+	index      int
+	State      Point
+	Parent     *Node
+	Action     string
+	CostToGoal int
+}
+
+func (n *Node) ManhattanDistance(goal Point) int {
+	return abs(n.State.Row-goal.Row) + abs(n.State.Col-goal.Col)
 }
 
 type Solution struct {
