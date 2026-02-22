@@ -45,17 +45,14 @@ func (d *DijkstraSearch) Remove() (*Node, error) {
 				fmt.Println("Node:", x.State)
 			}
 		}
-		node := d.Frontier[0]
-
-		d.Frontier = d.Frontier[1:]
-		return node, nil
+		return  heap.Pop(&d.Frontier).(*Node), nil
 	}
 
 	return nil, errors.New("frontier is empty")
 }
 
 func (d *DijkstraSearch) Solve() {
-	fmt.Println("Starting to solve maze using breadth first search...")
+	fmt.Println("Starting to solve maze using dijkstra first search...")
 
 	d.Game.NumExplored = 0
 
