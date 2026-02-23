@@ -2,6 +2,7 @@ package main
 
 import (
 	"log"
+	"math"
 	"os"
 )
 
@@ -45,4 +46,8 @@ func abs(x int) int {
 	} else {
 		return x
 	}
+}
+
+func euclideanDist(p, goal Point) float64 {
+	return math.Sqrt(float64(p.Row-goal.Row)*float64(p.Row-goal.Row) + float64(p.Col-goal.Col)*float64(p.Col-goal.Col))
 }

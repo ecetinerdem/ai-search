@@ -52,7 +52,7 @@ func (d *GreedyBestFirstSearch) Remove() (*Node, error) {
 }
 
 func (d *GreedyBestFirstSearch) Solve() {
-	fmt.Println("Starting to solve maze using dijkstra first search...")
+	fmt.Println("Starting to solve maze using gbfs first search...")
 
 	d.Game.NumExplored = 0
 
