@@ -133,7 +133,7 @@ func (g *Maze) PrintMaze() {
 				fmt.Print("A")
 			} else if g.Goal.Row == col.State.Row && g.Goal.Col == col.State.Col {
 				fmt.Print("B")
-			} else if g.inSolution(Point{r, c}) {
+			} else if g.inSolution(Point{r, c, false}) {
 				fmt.Print("*")
 			} else {
 				fmt.Print(" ")
@@ -163,8 +163,9 @@ const (
 
 // Point struct is for xy coordinates
 type Point struct {
-	Row int
-	Col int
+	Row   int
+	Col   int
+	Water bool
 }
 
 // Wall is potential node to be area that cannot be explored
@@ -277,6 +278,11 @@ func (g *Maze) Load(fileName string) error {
 				wall.State.Row = i
 				wall.State.Col = j
 				wall.wall = false
+			case "w":
+				wall.State.Row = i
+				wall.State.Col = j
+				wall.wall = false
+				wall.State.Water = true
 			case "#":
 				wall.State.Row = i
 				wall.State.Col = j
